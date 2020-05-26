@@ -3,11 +3,10 @@ pipeline {
   agent any
   
   stages{
-       stage("mon") {
+       stage("MAVEN CLEAN COMPILE") {
 
           steps {
-
-            echo "salam"
+            WithMaven(mave: 'maven_3_6_3''){ sh 'mvn clean compile'}
           }
 
       } 
