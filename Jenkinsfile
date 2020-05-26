@@ -5,7 +5,7 @@ pipeline {
   stages{
        stage("mon") {
 
-          step {
+          steps {
 
             echo "salam"
           }
