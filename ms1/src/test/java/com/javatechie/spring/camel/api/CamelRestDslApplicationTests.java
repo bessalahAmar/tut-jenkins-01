@@ -1,5 +1,6 @@
 package com.javatechie.spring.camel.api;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +12,8 @@ public class CamelRestDslApplicationTests {
 
 	@Test
 	public void contextLoads() {
+
+		Assert.assertEquals(1,2);
 	}
 
 }
