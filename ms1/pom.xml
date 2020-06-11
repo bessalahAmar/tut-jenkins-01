@@ -80,24 +80,39 @@
 		<plugins>
 			<plugin>
 				<groupId>com.spotify</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<version>1.2.0</version>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.10</version>
+				<executions>
+					<execution>
+						<id>tag-latest</id>
+						<goals>
+							<goal>build</goal>
+							<goal>tag</goal>
+							<goal>push</goal>
+						</goals>
+						<configuration>
+							<tag>latest</tag>
+						</configuration>
+					</execution>
+					<execution>
+						<id>tag-version</id>
+						<goals>
+							<goal>build</goal>
+							<goal>tag</goal>
+							<goal>push</goal>
+						</goals>
+						<configuration>
+							<tag>${project.version}</tag>
+						</configuration>
+					</execution>
+				</executions>
 				<configuration>
-					<imageName>${docker.repository}/${docker.image.prefix}/${project.artifactId}:${image.version}</imageName>
-					<imageTags>
-						<imageTag>${image.version}</imageTag>
-						<imageTag>latest</imageTag>
-					</imageTags>
-					<dockerDirectory>${basedir}</dockerDirectory>
-					<serverId>artifactory</serverId>
-					<registryUrl>https://multirepo-oab.si.fr.intraorange:5002</registryUrl>
-					<resources>
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>${project.build.directory}</directory>
-							<include>${project.build.finalName}.jar</include>
-						</resource>
-					</resources>
+					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
+					<repository>registry.hub.docker.com/amarbessalah/${project.artifactId}</repository>
+					<tag>${project.version}</tag>
+					<buildArgs>
+						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+					</buildArgs>
 				</configuration>
 			</plugin>
 		</plugins>

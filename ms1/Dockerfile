@@ -1,7 +1,11 @@
-FROM openjdk:8-jdk-alpine
-VOLUME /tmp
-ARG JAR_FILE=target/camel-rest-dsl-0.0.1-SNAPSHOT.jar
-COPY ${JAR_FILE} app.jar
-ENV CONFIG_SERVER_URL 'https://localhost:8888'
-EXPOSE 8080
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-Dspring.cloud.config.uri=${CONFIG_SERVER_URL}","-jar","/app.jar"]
+FROM adoptopenjdk/openjdk11:x86_64-ubuntu-jdk-11.0.3_7
+
+RUN mkdir -p /user/share/camel-rest-dsl/static/songs
+
+RUN mkdir -p /user/share/camel-rest-dsl/bin
+
+ADD /target/camel-rest-dsl*SNAPSHOT.jar /user/share/cisapify/bin/camel-rest-dsl.jar
+
+WORKDIR /user/share/camel-rest-dsl
+
+ENTRYPOINT ["/opt/java/openjdk/bin/java", "-jar", "bin/camel-rest-dsl.jar"]
